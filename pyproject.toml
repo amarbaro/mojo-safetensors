@@ -1,0 +1,7 @@
+[project]
+name = "mojo-safetensors"
+version = "0.1.0"
+description = "Read (mmapped, zero copy) and write safetensors files from Mojo, as the reference does"
+license = "Apache-2.0"
+requires-python = ">=3.11,<3.15"
+dependencies = ["mojo>=1.1.0,<1.2"]
