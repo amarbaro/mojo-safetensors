@@ -62,6 +62,7 @@ print("%.2f" % (time.monotonic() - t))' $CASES read .work/big50k.safetensors .wo
     || { echo "FAIL perf: 50,000-tensor header read in ${t} s, want < 1 s"; exit 1; }
   echo "perf: 50,000-tensor header read and hashed in ${t} s"
   $M run -I src -I lib tests/api.mojo || { echo "FAIL api: tests/api.mojo"; exit 1; }
+  $M run -I src -I lib tests/coexist.mojo || { echo "FAIL coexist: tests/coexist.mojo (a libc declaration clashes with the stdlib)"; exit 1; }
   $M run -I src -I lib examples/quickstart.mojo > /dev/null || { echo "FAIL example: examples/quickstart.mojo"; exit 1; }
 fi
 echo "PASS all"

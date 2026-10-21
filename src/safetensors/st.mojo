@@ -86,7 +86,7 @@ struct SafeTensors(Movable):
         var fd = external_call["open64", Int32](p.as_c_string_span().ptr(), Int32(0o2000000))
         if fd < 0:
             raise Error("safetensors: cannot open ", path)
-        self.size = Int(external_call["lseek", Int64](fd, Int64(0), Int32(2)))
+        self.size = Int(external_call["lseek64", Int64](fd, Int64(0), Int32(2)))
         if self.size >= 8:
             self.base = external_call["mmap", Int](Int(0), self.size, Int32(1), Int32(2), fd, Int64(0))
         _ = external_call["close", Int32](fd)
