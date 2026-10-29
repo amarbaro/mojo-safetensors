@@ -26,7 +26,7 @@ def main() raises:
 
 ## Install
 
-Requires Mojo 1.1 on Linux and [mojo-json](https://github.com/amarbaro/mojo-json) v0.1.0.
+Requires Mojo 1.2 on Linux and [mojo-json](https://github.com/amarbaro/mojo-json) v0.1.0.
 Builds on Mojo 1.2 nightly too.
 
 | Way | Command |
