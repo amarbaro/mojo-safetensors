@@ -1,6 +1,9 @@
 # mojo-safetensors
 
-[![CI](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml/badge.svg)](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml)
+<!-- badges -->
+[![ci](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml) [![latest release](https://img.shields.io/github/v/release/amarbaro/mojo-safetensors)](https://github.com/amarbaro/mojo-safetensors/releases/latest) [![license](https://img.shields.io/github/license/amarbaro/mojo-safetensors)](https://github.com/amarbaro/mojo-safetensors/blob/main/LICENSE)
+<!-- /badges -->
+
 
 Read and write [safetensors](https://github.com/huggingface/safetensors) files from Mojo. A
 file is mmapped read-only and each tensor's data is a `Span` into the mapping, so nothing is
