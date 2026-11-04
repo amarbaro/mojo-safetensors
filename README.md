@@ -4,6 +4,23 @@
 [![ci](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/amarbaro/mojo-safetensors/actions/workflows/ci.yml) [![latest release](https://img.shields.io/github/v/release/amarbaro/mojo-safetensors)](https://github.com/amarbaro/mojo-safetensors/releases/latest) [![license](https://img.shields.io/github/license/amarbaro/mojo-safetensors)](https://github.com/amarbaro/mojo-safetensors/blob/main/LICENSE)
 <!-- /badges -->
 
+<!-- install -->
+Install: `pixi add mojo-safetensors` once published. For now: `git clone https://github.com/amarbaro/mojo-safetensors`, then `mojo run -I mojo-safetensors/src app.mojo`. It also needs mojo-json: put its `src` on another `-I`.
+
+```mojo
+from std.os import remove
+from safetensors import SafeTensors, Writer
+
+
+def main() raises:
+    var w = Writer()
+    w.add("weight", "F32", [2], [0, 0, 128, 63, 0, 0, 0, 64])  # float32 1.0, 2.0
+    w.save("quickstart.safetensors")
+    var f = SafeTensors("quickstart.safetensors")  # mmapped; data() is a view, no copy
+    print(f.tensors[0].name, f.tensors[0].dtype, len(f.data("weight")), "bytes")
+    remove("quickstart.safetensors")
+```
+<!-- /install -->
 
 Read and write [safetensors](https://github.com/huggingface/safetensors) files from Mojo. A
 file is mmapped read-only and each tensor's data is a `Span` into the mapping, so nothing is
@@ -14,28 +31,8 @@ implementation (`huggingface/safetensors` 0.6.2):
 - checkpoints: three real ones list identically
 321 lines.
 
-```mojo
-from safetensors import SafeTensors, Writer, Checkpoint
-
-def main() raises:
-    var f = SafeTensors("model.safetensors")          # header parsed, data mmapped
-    for t in f.tensors:                                # sorted by name
-        print(t.name, t.dtype, t.numel(), t.nbytes())
-    var w = f.data("lm_head.weight")                   # Span[UInt8] into the file, no copy
-
-    var ck = Checkpoint("Qwen3-8B")                    # index.json + shards, validated
-    print(len(ck.shards))
-```
-
-## Install
-
 Requires Mojo 1.2 on Linux and [mojo-json](https://github.com/amarbaro/mojo-json) v0.1.0.
 Builds on Mojo 1.2 nightly too.
-
-| Way | Command |
-|---|---|
-| Source path | `mojo run -I path/to/mojo-safetensors/src -I path/to/mojo-json/src app.mojo` |
-| Vendor | copy `src/safetensors/` and mojo-json's `src/json/` into your project |
 
 ## What you get
 
