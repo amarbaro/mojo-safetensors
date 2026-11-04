@@ -25,6 +25,8 @@ cases = {
  "meta_int": raw({"__metadata__": {"k": 1}, "a": {"dtype": "U8", "shape": [1], "data_offsets": [0, 1]}}, bytes(1)),
  "noshape": raw({"a": {"dtype": "U8", "data_offsets": [0, 1]}}, bytes(1)),
  "extrafield": raw({"a": {"dtype": "U8", "shape": [1], "data_offsets": [0, 1], "x": 1}}, bytes(1)),
+ "ovf": raw({"a": {"dtype": "F32", "shape": [1 << 32, 1 << 32], "data_offsets": [0, 0]}}),
+ "ovf2": raw({"a": {"dtype": "F64", "shape": [(1 << 61) + 1], "data_offsets": [0, 8]}}, bytes(8)),
  "negshape": raw({"a": {"dtype": "U8", "shape": [-1], "data_offsets": [0, 1]}}, bytes(1)),
  "space_start": raw(b' {"a":{"dtype":"U8","shape":[1],"data_offsets":[0,1]}}', bytes(1)),
  "trail_space": raw(b'{"a":{"dtype":"U8","shape":[1],"data_offsets":[0,1]}}   ', bytes(1)),
