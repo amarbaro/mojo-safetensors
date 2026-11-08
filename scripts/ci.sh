@@ -7,6 +7,7 @@ v=$(sed -n 's/^version = "\(.*\)"/\1/p' pyproject.toml); c=$(sed -n 's/^- \[v\([
 [ "$v" = "$c" ] || { echo "FAIL version: pyproject $v vs newest CHANGELOG entry $c"; exit 1; }
 command -v uv >/dev/null || { echo "FAIL setup: uv not installed"; exit 1; }
 uv sync || { echo "FAIL setup: uv sync"; exit 1; }
+export MOJO="${MOJO:-.venv/bin/mojo}"
 if [[ ! -e lib/json ]]; then
   git clone -q --depth 1 --branch v0.1.0 https://github.com/amarbaro/mojo-json .work/deps/mojo-json \
     || { echo "FAIL setup: clone mojo-json v0.1.0"; exit 1; }
