@@ -5,7 +5,8 @@
 <!-- /badges -->
 
 <!-- install -->
-Install: `pixi add mojo-safetensors` once published. For now: `git clone https://github.com/amarbaro/mojo-safetensors`, then `mojo run -I mojo-safetensors/src app.mojo`. It also needs mojo-json: put its `src` on another `-I`.
+Install: `pixi workspace channel add https://conda.modular.com/max https://prefix.dev/amarbaro/amarbaro`, then `pixi add mojo-safetensors` (import `safetensors`). From source: `git clone https://github.com/amarbaro/mojo-safetensors`, then `mojo run -I mojo-safetensors/src app.mojo`. It also needs mojo-json: put its `src` on another `-I`.
+Toolchains: Mojo 1.2 stable, and the nightly 1.3.0.dev2026110805 in the weekly [mojo-libs](https://github.com/amarbaro/mojo-libs) matrix (36 libraries on stable, 35 on nightly).
 
 ```mojo
 from std.os import remove
@@ -31,8 +32,7 @@ implementation (`huggingface/safetensors` 0.6.2):
 - checkpoints: three real ones list identically
 321 lines.
 
-Requires Mojo 1.2 on Linux and [mojo-json](https://github.com/amarbaro/mojo-json) v0.1.0.
-Builds on Mojo 1.2 nightly too.
+Requires Mojo 1.2 on Linux and [mojo-json](https://github.com/amarbaro/mojo-json): the conda package pulls it; a source checkout's `scripts/ci.sh` fetches v0.1.0.
 
 ## What you get
 
@@ -61,6 +61,8 @@ API: [docs/api.md](docs/api.md). Design: [docs/design.md](docs/design.md).
 | 1,500 tensors (gate fixture) | 1 ms, 12 MB | 163 ms, 31 MB |
 | deepseek-ocr-2 shard, 2,707 tensors | 2 ms, 13 MB | 505 ms, 32 MB |
 | 50,000 tensors | 51 ms, 47 MB | 164 s, 66 MB |
+
+**Limits:** Read-only through mmap: a tensor's `Span` lives as long as its `SafeTensors` value. The writer sorts metadata keys; the reference writes them in HashMap order, so files with 2 or more metadata keys match it in content, not byte for byte.
 
 ## Checks
 
